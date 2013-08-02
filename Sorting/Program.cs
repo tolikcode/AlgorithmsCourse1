@@ -51,9 +51,9 @@ namespace AlgorithmsCourse1
         {
 
 
+
             Console.WriteLine("Done.");
             Console.ReadLine();
-
         }
 
         private static void ProgrammingQuestion1()
@@ -140,6 +140,38 @@ namespace AlgorithmsCourse1
             }
 
             return resultArray;
+        }
+
+        private static int[] QuickSort(int[] array, int startIndex, int endIndex)
+        {
+            if(startIndex == endIndex)
+                return array;
+
+            int pivotValue = array[startIndex];
+            int firstBiggerIndex = startIndex + 1; // index of the first element that is bigger than pivot element
+            for (int j = startIndex + 1; j <= endIndex; j++)
+            {
+                if (array[j] < pivotValue) // there might be a redundant swap if the first element we check is less than pivot,
+                {                          // but this won't hurt anybody
+                    Swap(array, firstBiggerIndex, j);
+                    firstBiggerIndex++;
+                }
+            }
+            int pivotIndex = firstBiggerIndex - 1;
+            Swap(array, startIndex, pivotIndex);
+            if(pivotIndex != startIndex)
+                QuickSort(array, startIndex, pivotIndex - 1);
+            if(pivotIndex != endIndex)
+                QuickSort(array, pivotIndex + 1, endIndex);
+
+            return array;
+        }
+
+        private static void Swap(int[] array, int index1, int index2)
+        {
+            int temp = array[index1];
+            array[index1] = array[index2];
+            array[index2] = temp;
         }
 
         private static CountedInversionsIntArray CountInversionsAndSort(CountedInversionsIntArray initialArray)
