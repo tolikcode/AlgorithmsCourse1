@@ -147,7 +147,12 @@ namespace AlgorithmsCourse1
             if(startIndex == endIndex)
                 return array;
 
-            int pivotValue = array[startIndex];
+            Random random = new Random();
+            int pivotElementIndex = random.Next(startIndex, endIndex + 1); // endIndex + 1 is because upper bound (max value) is exclusive
+
+            int pivotValue = array[pivotElementIndex];
+            Swap(array, startIndex, pivotElementIndex);
+
             int firstBiggerIndex = startIndex + 1; // index of the first element that is bigger than pivot element
             for (int j = startIndex + 1; j <= endIndex; j++)
             {
