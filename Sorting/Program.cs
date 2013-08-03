@@ -51,7 +51,6 @@ namespace AlgorithmsCourse1
         {
 
 
-
             Console.WriteLine("Done.");
             Console.ReadLine();
         }
@@ -71,7 +70,7 @@ namespace AlgorithmsCourse1
 
             CountedInversionsIntArray inversionsIntArray = new CountedInversionsIntArray {Array = initialArray};
 
-            CountedInversionsIntArray sortedArray = CountInversionsAndSort(inversionsIntArray);
+            CountedInversionsIntArray sortedArray = MergeSort.CountInversionsAndSort(inversionsIntArray);
 
             Console.WriteLine("Number of inversions: {0}", sortedArray.NumberOfInversions);
         }
@@ -94,156 +93,5 @@ namespace AlgorithmsCourse1
 
             return initialArray;
         }
-
-        private static int[] MergeSort(int[] initialArray, bool descending)
-        {
-            if (initialArray.Length < 2)
-                return initialArray;
-
-            int[] firstArray = initialArray.Take(initialArray.Length/2).ToArray();
-            int[] secondArray = initialArray.Skip(initialArray.Length/2).ToArray();
-
-            int[] firstArraySorted = MergeSort(firstArray, descending);
-            int[] secondArraySorted = MergeSort(secondArray, descending);
-
-            int[] resultArray = new int[initialArray.Length];
-
-            int i = 0;
-            int j = 0;
-            for (int k = 0; k < resultArray.Length; k++)
-            {
-                if (i == firstArray.Length)
-                {
-                    resultArray[k] = secondArraySorted[j];
-                    j++;
-                    continue;
-                }
-
-                if (j == secondArray.Length)
-                {
-                    resultArray[k] = firstArraySorted[i];
-                    i++;
-                    continue;
-                }
-                
-                if ((firstArraySorted[i] > secondArraySorted[j] && !descending)
-                    || (firstArraySorted[i] < secondArraySorted[j] && descending))
-                {
-                    resultArray[k] = secondArraySorted[j];
-                    j++;
-                }
-                else
-                {
-                    resultArray[k] = firstArraySorted[i];
-                    i++;
-                }
-            }
-
-            return resultArray;
-        }
-
-        private static int[] QuickSort(int[] array, int startIndex, int endIndex)
-        {
-            if(startIndex == endIndex)
-                return array;
-
-            Random random = new Random();
-            int pivotElementIndex = random.Next(startIndex, endIndex + 1); // endIndex + 1 is because upper bound (max value) is exclusive
-
-            int pivotValue = array[pivotElementIndex];
-            Swap(array, startIndex, pivotElementIndex);
-
-            int firstBiggerIndex = startIndex + 1; // index of the first element that is bigger than pivot element
-            for (int j = startIndex + 1; j <= endIndex; j++)
-            {
-                if (array[j] < pivotValue) // there might be a redundant swap if the first element we check is less than pivot,
-                {                          // but this won't hurt anybody
-                    Swap(array, firstBiggerIndex, j);
-                    firstBiggerIndex++;
-                }
-            }
-            int pivotIndex = firstBiggerIndex - 1;
-            Swap(array, startIndex, pivotIndex);
-            if(pivotIndex != startIndex)
-                QuickSort(array, startIndex, pivotIndex - 1);
-            if(pivotIndex != endIndex)
-                QuickSort(array, pivotIndex + 1, endIndex);
-
-            return array;
-        }
-
-        private static void Swap(int[] array, int index1, int index2)
-        {
-            int temp = array[index1];
-            array[index1] = array[index2];
-            array[index2] = temp;
-        }
-
-        private static CountedInversionsIntArray CountInversionsAndSort(CountedInversionsIntArray initialArray)
-        {
-            if (initialArray.Length < 2)
-                return initialArray;
-
-            CountedInversionsIntArray firstArray = new CountedInversionsIntArray
-                {
-                    Array = initialArray.Array.Take(initialArray.Length/2).ToArray(),
-                    NumberOfInversions = 0
-                };
-
-            CountedInversionsIntArray secondArray = new CountedInversionsIntArray
-            {
-                Array = initialArray.Array.Skip(initialArray.Length/2).ToArray(),
-                NumberOfInversions = 0
-            };
-
-            CountedInversionsIntArray firstArraySorted = CountInversionsAndSort(firstArray);
-            CountedInversionsIntArray secondArraySorted = CountInversionsAndSort(secondArray);
-
-            CountedInversionsIntArray resultArray = new CountedInversionsIntArray
-                {
-                    Array = new int[initialArray.Length],
-                    NumberOfInversions = firstArraySorted.NumberOfInversions + secondArraySorted.NumberOfInversions // only left and right inversions are counted here
-                };                                                                                                 // now we also need split inversions
-
-            int numberOfSplitInversions = 0;
-            int i = 0;
-            int j = 0;
-            for (int k = 0; k < resultArray.Length; k++)
-            {
-                if (i == firstArray.Length)
-                {
-                    resultArray[k] = secondArraySorted[j];
-                    j++;
-                    continue;
-                }
-
-                if (j == secondArray.Length)
-                {
-                    resultArray[k] = firstArraySorted[i];
-                    i++;
-                    continue;
-                }
-
-                if (firstArraySorted[i] > secondArraySorted[j])
-                {
-                    resultArray[k] = secondArraySorted[j];
-                    for (int l = i; l < firstArraySorted.Length; l++)
-                    {
-                        //Console.WriteLine("Inverstion found ({0},{1})", firstArraySorted[l], secondArraySorted[j]);
-                        numberOfSplitInversions++;
-                    }
-                    j++;
-                }
-                else
-                {
-                    resultArray[k] = firstArraySorted[i];
-                    i++;
-                }
-            }
-
-            resultArray.NumberOfInversions += numberOfSplitInversions;
-            return resultArray;
-        }
-
     }
 }
