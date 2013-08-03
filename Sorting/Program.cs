@@ -49,7 +49,7 @@ namespace AlgorithmsCourse1
 
         static void Main(string[] args)
         {
-
+            
 
             Console.WriteLine("Done.");
             Console.ReadLine();
@@ -73,6 +73,24 @@ namespace AlgorithmsCourse1
             CountedInversionsIntArray sortedArray = MergeSort.CountInversionsAndSort(inversionsIntArray);
 
             Console.WriteLine("Number of inversions: {0}", sortedArray.NumberOfInversions);
+        }
+
+        private static void ProgrammingQuestion2()
+        {
+            int[] initialArray = new int[10000];
+            StreamReader streamReader = new StreamReader(@"D:\QuickSort.txt");
+
+            string line;
+            int i = 0;
+            while ((line = streamReader.ReadLine()) != null)
+            {
+                initialArray[i] = int.Parse(line);
+                i++;
+            }
+
+            int numberOfComparisons = QuickSort.CountNumberOfComparisons(initialArray, PivotSelectionMethod.MedianOfThree);
+
+            Console.WriteLine(numberOfComparisons);
         }
 
         private static int[] BubbleSort(int[] initialArray)
