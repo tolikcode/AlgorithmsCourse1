@@ -70,7 +70,9 @@ namespace AlgorithmsCourse1
 
             CountedInversionsIntArray inversionsIntArray = new CountedInversionsIntArray {Array = initialArray};
 
-            CountedInversionsIntArray sortedArray = MergeSort.CountInversionsAndSort(inversionsIntArray);
+            MergeSort mergeSort = new MergeSort();
+
+            CountedInversionsIntArray sortedArray = mergeSort.CountInversionsAndSort(inversionsIntArray);
 
             Console.WriteLine("Number of inversions: {0}", sortedArray.NumberOfInversions);
         }
@@ -88,7 +90,9 @@ namespace AlgorithmsCourse1
                 i++;
             }
 
-            int numberOfComparisons = QuickSort.CountNumberOfComparisons(initialArray, PivotSelectionMethod.MedianOfThree);
+            QuickSort quickSort = new QuickSort();
+
+            int numberOfComparisons = quickSort.CountNumberOfComparisons(initialArray, PivotSelectionMethod.MedianOfThree);
 
             Console.WriteLine(numberOfComparisons);
         }

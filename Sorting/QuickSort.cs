@@ -15,9 +15,9 @@ namespace AlgorithmsCourse1
 
     class QuickSort
     {
-        private static int numberOfComparisons;
+        private int numberOfComparisons;
 
-        public static int CountNumberOfComparisons(int[] array, PivotSelectionMethod pivotSelection)
+        public int CountNumberOfComparisons(int[] array, PivotSelectionMethod pivotSelection)
         {
             numberOfComparisons = 0;
 
@@ -26,7 +26,7 @@ namespace AlgorithmsCourse1
             return numberOfComparisons;
         }
 
-        public static int[] Sort(int[] array, int startIndex, int endIndex, PivotSelectionMethod pivotSelection)
+        public int[] Sort(int[] array, int startIndex, int endIndex, PivotSelectionMethod pivotSelection)
         {
             if(startIndex > endIndex)
                 throw new ArgumentException("Start index can't be bigger than end index.");
@@ -59,7 +59,7 @@ namespace AlgorithmsCourse1
             return array;
         }
 
-        private static int GetPivotIndex(int[] array, int startIndex, int endIndex, PivotSelectionMethod pivotSelection)
+        private int GetPivotIndex(int[] array, int startIndex, int endIndex, PivotSelectionMethod pivotSelection)
         {
             switch (pivotSelection)
             {
@@ -99,7 +99,7 @@ namespace AlgorithmsCourse1
             }
         }
 
-        private static void Swap(int[] array, int index1, int index2)
+        private void Swap(int[] array, int index1, int index2)
         {
             int temp = array[index1];
             array[index1] = array[index2];

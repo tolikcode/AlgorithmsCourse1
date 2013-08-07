@@ -24,7 +24,7 @@ namespace AlgorithmsCourse1
 
     class MergeSort
     {
-        public static int[] Sort(int[] initialArray, bool descending)
+        public int[] Sort(int[] initialArray, bool descending)
         {
             if (initialArray.Length < 2)
                 return initialArray;
@@ -76,7 +76,7 @@ namespace AlgorithmsCourse1
         /// </summary>
         /// <param name="initialArray"></param>
         /// <returns></returns>
-        public static CountedInversionsIntArray CountInversionsAndSort(CountedInversionsIntArray initialArray)
+        public CountedInversionsIntArray CountInversionsAndSort(CountedInversionsIntArray initialArray)
         {
             if (initialArray.Length < 2)
                 return initialArray;
