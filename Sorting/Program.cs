@@ -49,7 +49,7 @@ namespace AlgorithmsCourse1
 
         static void Main(string[] args)
         {
-            
+            ProgrammingQuestion3();
 
             Console.WriteLine("Done.");
             Console.ReadLine();
@@ -95,6 +95,34 @@ namespace AlgorithmsCourse1
             int numberOfComparisons = quickSort.CountNumberOfComparisons(initialArray, PivotSelectionMethod.MedianOfThree);
 
             Console.WriteLine(numberOfComparisons);
+        }
+
+        private static void ProgrammingQuestion3()
+        {
+            StreamReader streamReader = new StreamReader(@"D:\kargerMinCut.txt");
+            List<Edge> graph = new List<Edge>();
+
+            string line;
+            while ((line = streamReader.ReadLine()) != null)
+            {
+                string[] lineNumbers = line.Split('\t');
+
+                int vertexNumber = int.Parse(lineNumbers[0]);
+
+                for (int i = 1; i < lineNumbers.Length - 1; i++) // lineNumbers.Length - 1 because the last element is empty just before line end
+                {
+                    int otherVertexNumber = int.Parse(lineNumbers[i]);
+
+                    if (otherVertexNumber < vertexNumber)
+                        continue; // if other vertex number is smaller then we must have added this edge already
+
+                    graph.Add(new Edge(vertexNumber, otherVertexNumber));
+                }
+            }
+
+            KargersContraction kargersContraction = new KargersContraction();
+
+            int minCut = kargersContraction.FindMinCut(graph);
         }
 
         private static int[] BubbleSort(int[] initialArray)
