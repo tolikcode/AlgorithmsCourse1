@@ -32,21 +32,40 @@ namespace AlgorithmsCourse1
     {
         public int FindMinCut(List<Edge> graph)
         {
-            throw new NotImplementedException();
-
             Random random = new Random();
 
             while (GraphHasMoreThanTwoVertices(graph))
             {
                 Edge edgeToContract = graph[random.Next(0, graph.Count())];
 
-                foreach (Edge edge in graph)
+                //now we take all edges connected to edgeToContract.Vertex2 and connect them to edgeToContract.Vertex1 instead
+                for (int i = 0; i < graph.Count(); i++)
                 {
-                    // TODO: delete edges with same vertices as edgeToContract,
-                    // change all edges that are adjacent to edgeToContract.Vertex2 (for example) to edgeToContract.Vertex1
+                    if (graph[i].Vertex1 == edgeToContract.Vertex2)
+                    {
+                        if (graph[i].Vertex2 == edgeToContract.Vertex1)
+                        {
+                            graph.RemoveAt(i); // deleting parallel edge
+                            i--;
+                        }
+                        else
+                        {
+                            graph[i] = new Edge(edgeToContract.Vertex1, graph[i].Vertex2);
+                        }
+                    }
+                    else if (graph[i].Vertex2 == edgeToContract.Vertex2)
+                    {
+                        if (graph[i].Vertex1 == edgeToContract.Vertex1)
+                        {
+                            graph.RemoveAt(i); // deleting parallel edge
+                            i--;
+                        }
+                        else
+                        {
+                            graph[i] = new Edge(graph[i].Vertex1, edgeToContract.Vertex1);
+                        }
+                    }
                 }
-
-                //TODO: delete edgeToContract
 
             }
 

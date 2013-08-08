@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace AlgorithmsCourse1
 {
@@ -122,7 +124,37 @@ namespace AlgorithmsCourse1
 
             KargersContraction kargersContraction = new KargersContraction();
 
-            int minCut = kargersContraction.FindMinCut(graph);
+            int absoluteMinCut = graph.Count;
+            Object thisLock = new Object();
+
+            int numberOfTrials = 212000; // n = 200 (number of vertices)
+                                         // with number of trials = (n^2)*ln(n) the probability of failure is 1/n
+                                         // Remark: This is too much. It usually finds answer in a first few hundreads of iterations
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+
+            Parallel.For(0, numberOfTrials, i =>
+                {
+                    int currentMinCut = kargersContraction.FindMinCut(new List<Edge>(graph));
+                    lock (thisLock)
+                    {
+                        if (currentMinCut < absoluteMinCut)
+                        {
+                            absoluteMinCut = currentMinCut;
+                            Console.WriteLine("!!! New min cut found: " + absoluteMinCut);
+                        }
+                    }
+                    if (i%1000 == 0)
+                    {
+                        Console.WriteLine("Working around index: " + i);
+                        Console.WriteLine("Time elapsed: " + stopwatch.Elapsed); // even though Stopwatch is not guaranteed to be threadsafe,
+                    }                                                            // I hope it'll be OK with 64 bit processor
+                    
+                });
+
+            stopwatch.Stop();
+            Console.WriteLine("The min cut is: " + absoluteMinCut);
+            Console.WriteLine("Total time elapsed: " + stopwatch.Elapsed);
         }
 
         private static int[] BubbleSort(int[] initialArray)
