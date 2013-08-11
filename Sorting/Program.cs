@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace AlgorithmsCourse1
@@ -51,7 +52,7 @@ namespace AlgorithmsCourse1
 
         static void Main(string[] args)
         {
-            ProgrammingQuestion3();
+            ProgrammingQuestion4();
 
             Console.WriteLine("Done.");
             Console.ReadLine();
@@ -155,6 +156,35 @@ namespace AlgorithmsCourse1
             stopwatch.Stop();
             Console.WriteLine("The min cut is: " + absoluteMinCut);
             Console.WriteLine("Total time elapsed: " + stopwatch.Elapsed);
+        }
+
+        private static void ProgrammingQuestion4()
+        {
+            int numberOfVertices = 875714; // known from a file
+
+            SccVertex[] graph = new SccVertex[numberOfVertices + 1]; // position 0 in the array will always be empty
+            for (int i = 1; i <= numberOfVertices; i++)
+            {
+                graph[i] = new SccVertex();
+            }
+
+            StreamReader streamReader = new StreamReader(@"D:\SCC.txt");
+            string line;
+            while ((line = streamReader.ReadLine()) != null)
+            {
+                string[] edgeVertices = line.Split(' ');
+                SccVertex taleVertex = graph[int.Parse(edgeVertices[0])];
+                SccVertex headVertex = graph[int.Parse(edgeVertices[1])];
+                taleVertex.OutVertices.Add(headVertex);
+                headVertex.InVertices.Add(taleVertex);
+            }
+            Console.WriteLine("Reading of a graph from a file is finished.");
+
+            StrongComponents sccAlgorithm = new StrongComponents();
+            Thread thread = new Thread(() => sccAlgorithm.Compute(graph), 20 * 1024 * 1024); // using an increased stack because of deep recursion
+                                                                                             // another approach would be to implement DFS using a stack data structure
+                                                                                             // instead of a recursion
+            thread.Start();
         }
 
         private static int[] BubbleSort(int[] initialArray)
