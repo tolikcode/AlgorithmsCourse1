@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using AlgorithmsCourse1.DataStructures;
 
 namespace AlgorithmsCourse1
 {
@@ -52,7 +53,19 @@ namespace AlgorithmsCourse1
 
         static void Main(string[] args)
         {
-            ProgrammingQuestion4();
+            int[] array = GetShuffledIntArray(10, true);
+            Heap<int> h = new Heap<int>();
+
+            for (int i = 0; i < array.Count(); i++)
+            {
+                h.Insert(array[i]);
+            }
+
+            for (int i = 0; i < array.Count(); i++)
+            {
+                Console.WriteLine(h.ExtractMin());
+            }
+            
 
             Console.WriteLine("Done.");
             Console.ReadLine();
