@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlgorithmsCourse1", "Sorting\AlgorithmsCourse1.csproj", "{5FABB999-B24E-4A71-949E-E92AB43AC338}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlgorithmsCourse1", "AlgorithmsCourse1\AlgorithmsCourse1.csproj", "{5FABB999-B24E-4A71-949E-E92AB43AC338}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
