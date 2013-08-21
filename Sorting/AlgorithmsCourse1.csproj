@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataStructures\Heap.cs" />
+    <Compile Include="DijkstraAlgorithm.cs" />
     <Compile Include="KargersContraction.cs" />
     <Compile Include="MergeSort.cs" />
     <Compile Include="Program.cs" />

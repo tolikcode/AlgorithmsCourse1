@@ -53,19 +53,7 @@ namespace AlgorithmsCourse1
 
         static void Main(string[] args)
         {
-            int[] array = GetShuffledIntArray(10, true);
-            Heap<int> h = new Heap<int>();
-
-            for (int i = 0; i < array.Count(); i++)
-            {
-                h.Insert(array[i]);
-            }
-
-            for (int i = 0; i < array.Count(); i++)
-            {
-                Console.WriteLine(h.ExtractMin());
-            }
-            
+            ProgrammingQuestion5();
 
             Console.WriteLine("Done.");
             Console.ReadLine();
@@ -198,6 +186,37 @@ namespace AlgorithmsCourse1
                                                                                              // another approach would be to implement DFS using a stack data structure
                                                                                              // instead of a recursion
             thread.Start();
+        }
+
+        private static void ProgrammingQuestion5()
+        {
+            int numberOfVertices = 200; // known from a file
+            DijkstraVertex[] verticesArray = new DijkstraVertex[numberOfVertices + 1]; // position 0 in the array will always be empty
+            for (int i = 1; i <= numberOfVertices; i++)
+            {
+                verticesArray[i] = new DijkstraVertex(i);
+                verticesArray[i].ShortestPath = 1000000; // from the task
+            }
+
+            StreamReader streamReader = new StreamReader(@"D:\dijkstraData.txt");
+            string line;
+            while ((line = streamReader.ReadLine()) != null)
+            {
+                string[] vertexEdges = line.Split('\t');
+
+                DijkstraVertex currentVertex = verticesArray[int.Parse(vertexEdges[0])];
+
+                for (int i = 1; i < vertexEdges.Length - 1; i++) // vertexEdges.Length - 1 because the last element is empty just before line end
+                {
+                    string[] vertexEdge = vertexEdges[i].Split(',');
+                    DijkstraVertex otherVertex = verticesArray[int.Parse(vertexEdge[0])];
+                    int otherVertexDistance = int.Parse(vertexEdge[1]);
+                    currentVertex.NeighborVertices.Add(new Tuple<DijkstraVertex, int>(otherVertex, otherVertexDistance));
+                }
+            }
+
+            DijkstraAlgorithm dijkstraAlgorithm = new DijkstraAlgorithm();
+            dijkstraAlgorithm.Compute(verticesArray);
         }
 
         private static int[] BubbleSort(int[] initialArray)
