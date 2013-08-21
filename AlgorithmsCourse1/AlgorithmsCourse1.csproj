@@ -50,6 +50,23 @@
     <Compile Include="SortingAlgorithms\QuickSort.cs" />
     <Compile Include="StrongComponents.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="TasksData\dijkstraData %28Task5%29.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TasksData\IntegerArray %28Task1%29.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TasksData\kargerMinCut %28Task3%29.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TasksData\QuickSort %28Task2%29.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TasksData\SCC %28Task4%29.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

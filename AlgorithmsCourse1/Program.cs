@@ -61,8 +61,8 @@ namespace AlgorithmsCourse1
 
         private static void ProgrammingQuestion1()
         {
-            int[] initialArray = new int[100000]; 
-            StreamReader streamReader = new StreamReader(@"D:\IntegerArray.txt");
+            int[] initialArray = new int[100000];
+            StreamReader streamReader = new StreamReader(@"TasksData\IntegerArray (Task1).txt");
 
             string line;
             int i = 0;
@@ -84,7 +84,7 @@ namespace AlgorithmsCourse1
         private static void ProgrammingQuestion2()
         {
             int[] initialArray = new int[10000];
-            StreamReader streamReader = new StreamReader(@"D:\QuickSort.txt");
+            StreamReader streamReader = new StreamReader(@"TasksData\QuickSort (Task2).txt");
 
             string line;
             int i = 0;
@@ -103,7 +103,7 @@ namespace AlgorithmsCourse1
 
         private static void ProgrammingQuestion3()
         {
-            StreamReader streamReader = new StreamReader(@"D:\kargerMinCut.txt");
+            StreamReader streamReader = new StreamReader(@"TasksData\kargerMinCut (Task3).txt");
             List<Edge> graph = new List<Edge>();
 
             string line;
@@ -169,7 +169,7 @@ namespace AlgorithmsCourse1
                 graph[i] = new SccVertex();
             }
 
-            StreamReader streamReader = new StreamReader(@"D:\SCC.txt");
+            StreamReader streamReader = new StreamReader(@"TasksData\SCC (Task4).txt");
             string line;
             while ((line = streamReader.ReadLine()) != null)
             {
@@ -190,7 +190,7 @@ namespace AlgorithmsCourse1
 
         private static void ProgrammingQuestion5()
         {
-            string[] taskLines = File.ReadAllLines(@"D:\dijkstraData.txt");
+            string[] taskLines = File.ReadAllLines(@"TasksData\dijkstraData (Task5).txt");
             int numberOfVertices = taskLines.Count();
 
             DijkstraVertex[] verticesArray = new DijkstraVertex[numberOfVertices + 1]; // position 0 in the array will always be empty
