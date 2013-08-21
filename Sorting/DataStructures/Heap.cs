@@ -5,46 +5,63 @@ using System.Text;
 
 namespace AlgorithmsCourse1.DataStructures
 {
-    class Heap<T> where T : IComparable
+    /// <summary>
+    /// Implementation of a MinHeap (priority queue) data structure.
+    /// </summary>
+    /// <remarks>
+    /// Known issues: if you try to insert an object with a value that was alreay inserted into heap that will throw an exception.
+    /// While this is not a critical issue if you are using a heap of reference type objects, it's not good if you are using 
+    /// a heap of value type objects.
+    /// </remarks>
+    /// <typeparam name="T"></typeparam>
+    class Heap<T> where T : IComparable<T>
     {
         private List<T> data = new List<T>();
-        private Dictionary<T, int> dataDictionary = new Dictionary<T, int>();  
+        private Dictionary<T, int> dataDictionary = new Dictionary<T, int>(); // to support Delete in O(logn) time
  
         public void Insert(T insertElement)
         {
             data.Add(insertElement);
-            int addedIndex = data.Count - 1;
-            int newIndex = Heappify(addedIndex);
-            dataDictionary.Add(insertElement, newIndex);
+            dataDictionary.Add(data[data.Count - 1], data.Count - 1);
+            Heappify(data.Count - 1);
         }
 
         public T ExtractMin()
         {
+            if (data.Count == 0)
+                return default(T);
+
             T returnValue = data[0];
-            dataDictionary.Remove(data[0]);
-            data[0] = data[data.Count - 1];
+
+            Swap(0, data.Count - 1);
+
+            dataDictionary.Remove(data[data.Count - 1]);
             data.RemoveAt(data.Count - 1);
-            
 
             Heappify(0);
 
             return returnValue;
         }
 
-        public void Delete(T deleteElement) // TODO: check that there are enough elements
+        public void Delete(T deleteElement)
         {
+            if(data.Count == 0)
+                throw  new Exception("Failed to delete an element. The heap is empty.");
+
             int deleteIndex = dataDictionary[deleteElement];
-            dataDictionary.Remove(deleteElement);
-            data[deleteIndex] = data[data.Count - 1];
-            int newIndex = Heappify(deleteIndex);
-            dataDictionary[data[data.Count - 1]] = newIndex;
+
+            Swap(deleteIndex, data.Count - 1);
+
+            dataDictionary.Remove(data[data.Count - 1]);
+            data.RemoveAt(data.Count - 1);
+
+            Heappify(deleteIndex);
         }
 
-        private int Heappify(int index) //TODO: update dataDictionary
+        private int Heappify(int index)
         {
             if(index > data.Count || index < 0)
                 throw  new ArgumentOutOfRangeException("index");
-
 
             if (index != 0)
             {
@@ -65,11 +82,11 @@ namespace AlgorithmsCourse1.DataStructures
                 selectedChildIndex = data[firstChildIndex].CompareTo(data[secondChildIndex]) == -1
                                          ? firstChildIndex : secondChildIndex;
             }
-            else if (firstChildIndex > data.Count && secondChildIndex < data.Count)
+            else if (firstChildIndex > data.Count && secondChildIndex <= data.Count)
             {
                 selectedChildIndex = secondChildIndex;
             }
-            else if (firstChildIndex < data.Count && secondChildIndex > data.Count)
+            else if (firstChildIndex < data.Count && secondChildIndex >= data.Count)
             {
                 selectedChildIndex = firstChildIndex;
             }
@@ -85,9 +102,18 @@ namespace AlgorithmsCourse1.DataStructures
 
         private void Swap(int index1, int index2)
         {
+            if (index1 == index2)
+                return;
+
+            dataDictionary.Remove(data[index1]);
+            dataDictionary.Remove(data[index2]);
+
             T temp = data[index1];
             data[index1] = data[index2];
             data[index2] = temp;
+
+            dataDictionary.Add(data[index1], index1);
+            dataDictionary.Add(data[index2], index2);
         }
     }
 }
