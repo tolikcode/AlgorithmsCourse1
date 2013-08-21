@@ -38,7 +38,8 @@ namespace AlgorithmsCourse1.DataStructures
             dataDictionary.Remove(data[data.Count - 1]);
             data.RemoveAt(data.Count - 1);
 
-            Heappify(0);
+            if(data.Count != 0)
+                Heappify(0);
 
             return returnValue;
         }
@@ -55,12 +56,18 @@ namespace AlgorithmsCourse1.DataStructures
             dataDictionary.Remove(data[data.Count - 1]);
             data.RemoveAt(data.Count - 1);
 
-            Heappify(deleteIndex);
+            if(deleteIndex != data.Count)
+                Heappify(deleteIndex);
+        }
+
+        public bool Contains(T element)
+        {
+            return dataDictionary.ContainsKey(element);
         }
 
         private int Heappify(int index)
         {
-            if(index > data.Count || index < 0)
+            if(index >= data.Count || index < 0)
                 throw  new ArgumentOutOfRangeException("index");
 
             if (index != 0)

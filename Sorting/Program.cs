@@ -190,19 +190,18 @@ namespace AlgorithmsCourse1
 
         private static void ProgrammingQuestion5()
         {
-            int numberOfVertices = 200; // known from a file
+            string[] taskLines = File.ReadAllLines(@"D:\dijkstraData.txt");
+            int numberOfVertices = taskLines.Count();
+
             DijkstraVertex[] verticesArray = new DijkstraVertex[numberOfVertices + 1]; // position 0 in the array will always be empty
             for (int i = 1; i <= numberOfVertices; i++)
             {
-                verticesArray[i] = new DijkstraVertex(i);
-                verticesArray[i].ShortestPath = 1000000; // from the task
+                verticesArray[i] = new DijkstraVertex(i) { ShortestPath = 1000000 }; // 1000000 - from the task
             }
 
-            StreamReader streamReader = new StreamReader(@"D:\dijkstraData.txt");
-            string line;
-            while ((line = streamReader.ReadLine()) != null)
+            foreach (string taskLine in taskLines)
             {
-                string[] vertexEdges = line.Split('\t');
+                string[] vertexEdges = taskLine.Split('\t');
 
                 DijkstraVertex currentVertex = verticesArray[int.Parse(vertexEdges[0])];
 
@@ -216,7 +215,15 @@ namespace AlgorithmsCourse1
             }
 
             DijkstraAlgorithm dijkstraAlgorithm = new DijkstraAlgorithm();
-            dijkstraAlgorithm.Compute(verticesArray);
+            dijkstraAlgorithm.Compute(verticesArray, 1);
+
+            int[] targetVertices = new int[] { 7, 37, 59, 82, 99, 115, 133, 165, 188, 197 };
+            Console.WriteLine("Shortest paths to target vertices:");
+            foreach (int targetVertex in targetVertices)
+            {
+                Console.Write(verticesArray[targetVertex].ShortestPath + ",");
+            }
+            Console.WriteLine();
         }
 
         private static int[] BubbleSort(int[] initialArray)
