@@ -37,7 +37,7 @@ namespace AlgorithmsCourse1
                 vertex.Item1.ShortestPath = vertex.Item2;
             }
 
-            Heap<DijkstraVertex> minHeap = new Heap<DijkstraVertex>();
+            Heap<DijkstraVertex> minHeap = new Heap<DijkstraVertex>(false);
 
             // they say it's possible to do bulk insert into heap in O(n),
             // but I consider O(nlogn) good enough for this task
@@ -47,8 +47,9 @@ namespace AlgorithmsCourse1
             }
 
             DijkstraVertex currentMinVertex;
-            while ((currentMinVertex = minHeap.ExtractMin()) != null)
+            while (minHeap.Count != 0)
             {
+                currentMinVertex = minHeap.ExtractRoot();
                 foreach (Tuple<DijkstraVertex, int> neighborVertex in currentMinVertex.NeighborVertices)
                 {
                     if (minHeap.Contains(neighborVertex.Item1))

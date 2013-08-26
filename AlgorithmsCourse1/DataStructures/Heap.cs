@@ -6,7 +6,7 @@ using System.Text;
 namespace AlgorithmsCourse1.DataStructures
 {
     /// <summary>
-    /// Implementation of a MinHeap (priority queue) data structure.
+    /// Implementation of a Heap (priority queue) data structure.
     /// </summary>
     /// <remarks>
     /// Known issues: if you try to insert an object with a value that was alreay inserted into heap that will throw an exception.
@@ -16,9 +16,20 @@ namespace AlgorithmsCourse1.DataStructures
     /// <typeparam name="T"></typeparam>
     class Heap<T> where T : IComparable<T>
     {
+        private bool maxHeap;
         private List<T> data = new List<T>();
         private Dictionary<T, int> dataDictionary = new Dictionary<T, int>(); // to support Delete in O(logn) time
- 
+
+        public int Count
+        {
+            get { return data.Count; }
+        }
+
+        public Heap(bool maxHeap)
+        {
+            this.maxHeap = maxHeap;
+        }
+
         public void Insert(T insertElement)
         {
             data.Add(insertElement);
@@ -26,10 +37,10 @@ namespace AlgorithmsCourse1.DataStructures
             Heappify(data.Count - 1);
         }
 
-        public T ExtractMin()
+        public T ExtractRoot()
         {
             if (data.Count == 0)
-                return default(T);
+                throw new Exception("Failed to return a root. Heap is empty.");
 
             T returnValue = data[0];
 
@@ -42,6 +53,14 @@ namespace AlgorithmsCourse1.DataStructures
                 Heappify(0);
 
             return returnValue;
+        }
+
+        public T PeekRoot()
+        {
+            if (data.Count == 0)
+                throw new Exception("Failed to return a root. Heap is empty.");
+
+            return data[0];
         }
 
         public void Delete(T deleteElement)
@@ -73,7 +92,7 @@ namespace AlgorithmsCourse1.DataStructures
             if (index != 0)
             {
                 int parentIndex = (index + 1) / 2 - 1;
-                if (data[index].CompareTo(data[parentIndex]) == -1) // this element is less than parent
+                if (data[index].CompareTo(data[parentIndex]) == (maxHeap ? 1 : -1))
                 {
                    Swap(index, parentIndex);
                    return Heappify(parentIndex);
@@ -86,7 +105,8 @@ namespace AlgorithmsCourse1.DataStructures
             int selectedChildIndex = - 1;
             if (firstChildIndex < data.Count && secondChildIndex < data.Count)
             {
-                selectedChildIndex = data[firstChildIndex].CompareTo(data[secondChildIndex]) == -1
+                selectedChildIndex = (!maxHeap && data[firstChildIndex].CompareTo(data[secondChildIndex]) == -1)
+                                     || (maxHeap && data[firstChildIndex].CompareTo(data[secondChildIndex]) == 1)
                                          ? firstChildIndex : secondChildIndex;
             }
             else if (firstChildIndex > data.Count && secondChildIndex <= data.Count)
@@ -98,7 +118,7 @@ namespace AlgorithmsCourse1.DataStructures
                 selectedChildIndex = firstChildIndex;
             }
 
-            if (selectedChildIndex != - 1 && data[index].CompareTo(data[selectedChildIndex]) == 1)
+            if (selectedChildIndex != - 1 && data[index].CompareTo(data[selectedChildIndex]) == (maxHeap ? -1 : 1))
             {
                 Swap(index, selectedChildIndex);
                 return Heappify(selectedChildIndex);
