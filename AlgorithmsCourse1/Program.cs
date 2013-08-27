@@ -228,23 +228,5 @@ namespace AlgorithmsCourse1
             Console.WriteLine();
         }
 
-        private static int[] BubbleSort(int[] initialArray)
-        {
-            int temp;
-            for (int i = 0; i < initialArray.Length; i++)
-            {
-                for (int j = 0; j < initialArray.Length -1; j++)
-                {
-                    if(initialArray[j] > initialArray[j+1])
-                    {
-                        temp = initialArray[j];
-                        initialArray[j] = initialArray[j + 1];
-                        initialArray[j + 1] = temp;
-                    }
-                }
-            }
-
-            return initialArray;
-        }
     }
 }

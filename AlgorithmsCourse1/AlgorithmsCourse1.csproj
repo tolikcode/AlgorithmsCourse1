@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="DataStructures\Heap.cs" />
     <Compile Include="DataStructures\MultiValueDictionary.cs" />
+    <Compile Include="SortingAlgorithms\SimpleSorts.cs" />
     <Compile Include="TasksImplementations\DijkstraAlgorithm.cs" />
     <Compile Include="TasksImplementations\KargersContraction.cs" />
     <Compile Include="SortingAlgorithms\MergeSort.cs" />
