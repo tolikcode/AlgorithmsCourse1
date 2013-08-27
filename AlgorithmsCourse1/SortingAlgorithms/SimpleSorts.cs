@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using AlgorithmsCourse1.DataStructures;
 
 namespace AlgorithmsCourse1.SortingAlgorithms
 {
@@ -37,6 +38,19 @@ namespace AlgorithmsCourse1.SortingAlgorithms
             }
 
             return array;
+        }
+
+        public static IEnumerable<T> HeapSort<T>(IEnumerable<T> array) where T : IComparable<T>
+        {
+            Heap<T> heap = new Heap<T>(false);
+            foreach (T element in array)
+            {
+                heap.Insert(element);
+            }
+            while (heap.Count != 0)
+            {
+                yield return heap.ExtractRoot();
+            }
         }
 
         private static void Swap<T>(T[] array, int index1, int index2)
