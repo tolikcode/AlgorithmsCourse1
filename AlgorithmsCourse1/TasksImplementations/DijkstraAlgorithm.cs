@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using AlgorithmsCourse1.DataStructures;
 
-namespace AlgorithmsCourse1
+namespace AlgorithmsCourse1.TasksImplementations
 {
     internal class DijkstraVertex : IComparable<DijkstraVertex>
     {

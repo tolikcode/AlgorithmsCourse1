@@ -1,25 +1,33 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using AlgorithmsCourse1.SortingAlgorithms;
 
-namespace AlgorithmsCourse1.SortingAlgorithms
+namespace AlgorithmsCourse1.TasksImplementations
 {
-    internal enum PivotSelectionMethod
+    class QuickSortComparisonsCount
     {
-        FirstElement,
-        LastElement,
-        MedianOfThree,
-        Random
-    }
+        private int numberOfComparisons;
 
-    class QuickSort
-    {
+        public int CountNumberOfComparisons(int[] array, PivotSelectionMethod pivotSelection)
+        {
+            numberOfComparisons = 0;
+
+            Sort(array, 0, array.Length - 1, pivotSelection);
+
+            return numberOfComparisons;
+        }
+
         public int[] Sort(int[] array, int startIndex, int endIndex, PivotSelectionMethod pivotSelection)
         {
-            if(startIndex > endIndex)
+            if (startIndex > endIndex)
                 throw new ArgumentException("Start index can't be bigger than end index.");
 
             if (startIndex == endIndex)
                 return array;
+
+            numberOfComparisons += endIndex - startIndex;
 
             int pivotElementIndex = GetPivotIndex(array, startIndex, endIndex, pivotSelection);
             int pivotValue = array[pivotElementIndex];
@@ -49,36 +57,36 @@ namespace AlgorithmsCourse1.SortingAlgorithms
             switch (pivotSelection)
             {
                 case PivotSelectionMethod.FirstElement:
-                {
-                    return startIndex;
-                }
+                    {
+                        return startIndex;
+                    }
                 case PivotSelectionMethod.LastElement:
-                {
-                    return endIndex;
-                }
+                    {
+                        return endIndex;
+                    }
                 case PivotSelectionMethod.MedianOfThree: // the median (by value) of three elements (first, middle, last)
-                {
-                    if (endIndex - startIndex < 2)
-                        return startIndex; //pivot index in this case won't influence the number of comparisons
+                    {
+                        if (endIndex - startIndex < 2)
+                            return startIndex; //pivot index in this case won't influence the number of comparisons
 
-                    int arrayLength = endIndex - startIndex + 1;
-                    int middleIndex = startIndex + arrayLength/2;
-                    if (arrayLength%2 == 0)
-                        middleIndex--;
+                        int arrayLength = endIndex - startIndex + 1;
+                        int middleIndex = startIndex + arrayLength / 2;
+                        if (arrayLength % 2 == 0)
+                            middleIndex--;
 
-                    Tuple<int, int>[] keyElements = new Tuple<int, int>[3];
-                    keyElements[0] = new Tuple<int, int>(startIndex, array[startIndex]);
-                    keyElements[1] = new Tuple<int, int>(middleIndex, array[middleIndex]);
-                    keyElements[2] = new Tuple<int, int>(endIndex, array[endIndex]);
-                    keyElements = keyElements.OrderBy(el => el.Item2).ToArray();
+                        Tuple<int, int>[] keyElements = new Tuple<int, int>[3];
+                        keyElements[0] = new Tuple<int, int>(startIndex, array[startIndex]);
+                        keyElements[1] = new Tuple<int, int>(middleIndex, array[middleIndex]);
+                        keyElements[2] = new Tuple<int, int>(endIndex, array[endIndex]);
+                        keyElements = keyElements.OrderBy(el => el.Item2).ToArray();
 
-                    return keyElements[1].Item1;
-                }
+                        return keyElements[1].Item1;
+                    }
                 case PivotSelectionMethod.Random:
-                {
-                    Random random = new Random();
-                    return random.Next(startIndex, endIndex + 1); // endIndex + 1 is because upper bound (max value) is exclusive
-                }
+                    {
+                        Random random = new Random();
+                        return random.Next(startIndex, endIndex + 1); // endIndex + 1 is because upper bound (max value) is exclusive
+                    }
                 default:
                     throw new ArgumentOutOfRangeException("Unknown pivot selection method");
             }
@@ -90,6 +98,5 @@ namespace AlgorithmsCourse1.SortingAlgorithms
             array[index1] = array[index2];
             array[index2] = temp;
         }
-
     }
 }

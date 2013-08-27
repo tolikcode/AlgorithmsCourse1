@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using AlgorithmsCourse1.DataStructures;
+using AlgorithmsCourse1.SortingAlgorithms;
+using AlgorithmsCourse1.TasksImplementations;
 
 namespace AlgorithmsCourse1
 {
@@ -74,9 +76,9 @@ namespace AlgorithmsCourse1
 
             CountedInversionsIntArray inversionsIntArray = new CountedInversionsIntArray {Array = initialArray};
 
-            MergeSort mergeSort = new MergeSort();
+            InversionsCount inversionsCount = new InversionsCount();
 
-            CountedInversionsIntArray sortedArray = mergeSort.CountInversionsAndSort(inversionsIntArray);
+            CountedInversionsIntArray sortedArray = inversionsCount.CountInversionsAndSort(inversionsIntArray);
 
             Console.WriteLine("Number of inversions: {0}", sortedArray.NumberOfInversions);
         }
@@ -94,11 +96,11 @@ namespace AlgorithmsCourse1
                 i++;
             }
 
-            QuickSort quickSort = new QuickSort();
+            QuickSortComparisonsCount comparisonsCount = new QuickSortComparisonsCount();
 
-            int numberOfComparisons = quickSort.CountNumberOfComparisons(initialArray, PivotSelectionMethod.MedianOfThree);
+            int numberOfComparisons = comparisonsCount.CountNumberOfComparisons(initialArray, PivotSelectionMethod.MedianOfThree);
 
-            Console.WriteLine(numberOfComparisons);
+            Console.WriteLine("Number of comparisons " + numberOfComparisons);
         }
 
         private static void ProgrammingQuestion3()

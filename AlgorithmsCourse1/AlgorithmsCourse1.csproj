@@ -43,13 +43,15 @@
   <ItemGroup>
     <Compile Include="DataStructures\Heap.cs" />
     <Compile Include="DataStructures\MultiValueDictionary.cs" />
-    <Compile Include="DijkstraAlgorithm.cs" />
-    <Compile Include="KargersContraction.cs" />
+    <Compile Include="TasksImplementations\DijkstraAlgorithm.cs" />
+    <Compile Include="TasksImplementations\KargersContraction.cs" />
     <Compile Include="SortingAlgorithms\MergeSort.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SortingAlgorithms\QuickSort.cs" />
-    <Compile Include="StrongComponents.cs" />
+    <Compile Include="TasksImplementations\StrongComponents.cs" />
+    <Compile Include="TasksImplementations\InversionsCount.cs" />
+    <Compile Include="TasksImplementations\QuickSortComparisonsCount.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="TasksData\dijkstraData %28Task5%29.txt">
