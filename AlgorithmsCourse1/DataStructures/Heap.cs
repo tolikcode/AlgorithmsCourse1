@@ -8,17 +8,12 @@ namespace AlgorithmsCourse1.DataStructures
     /// <summary>
     /// Implementation of a Heap (priority queue) data structure.
     /// </summary>
-    /// <remarks>
-    /// Known issues: if you try to insert an object with a value that was alreay inserted into heap that will throw an exception.
-    /// While this is not a critical issue if you are using a heap of reference type objects, it's not good if you are using 
-    /// a heap of value type objects.
-    /// </remarks>
     /// <typeparam name="T"></typeparam>
     class Heap<T> where T : IComparable<T>
     {
         private bool maxHeap;
         private List<T> data = new List<T>();
-        private Dictionary<T, int> dataDictionary = new Dictionary<T, int>(); // to support Delete in O(logn) time
+        private MultiValueDictionary<T, int> dataDictionary = new MultiValueDictionary<T, int>(); // to support Delete in O(logn) time
 
         public int Count
         {
@@ -37,6 +32,10 @@ namespace AlgorithmsCourse1.DataStructures
             Heappify(data.Count - 1);
         }
 
+        /// <summary>
+        /// Returns a Min or Max element (depending on a heap type) and then removes this element from the heap
+        /// </summary>
+        /// <returns></returns>
         public T ExtractRoot()
         {
             if (data.Count == 0)
@@ -46,7 +45,7 @@ namespace AlgorithmsCourse1.DataStructures
 
             Swap(0, data.Count - 1);
 
-            dataDictionary.Remove(data[data.Count - 1]);
+            dataDictionary.Remove(data[data.Count - 1], data.Count - 1);
             data.RemoveAt(data.Count - 1);
 
             if(data.Count != 0)
@@ -55,6 +54,10 @@ namespace AlgorithmsCourse1.DataStructures
             return returnValue;
         }
 
+        /// <summary>
+        /// Returns a Min or Max element (depending on a heap type)
+        /// </summary>
+        /// <returns></returns>
         public T PeekRoot()
         {
             if (data.Count == 0)
@@ -63,20 +66,27 @@ namespace AlgorithmsCourse1.DataStructures
             return data[0];
         }
 
+        /// <summary>
+        /// Deletes all occurences of element in the heap
+        /// </summary>
+        /// <param name="deleteElement"></param>
         public void Delete(T deleteElement)
         {
             if(data.Count == 0)
                 throw  new Exception("Failed to delete an element. The heap is empty.");
 
-            int deleteIndex = dataDictionary[deleteElement];
+            IEnumerable<int> deleteIndices = dataDictionary[deleteElement];
 
-            Swap(deleteIndex, data.Count - 1);
+            foreach (int deleteIndex in deleteIndices)
+            {
+                Swap(deleteIndex, data.Count - 1);
 
-            dataDictionary.Remove(data[data.Count - 1]);
-            data.RemoveAt(data.Count - 1);
+                dataDictionary.Remove(data[data.Count - 1], data.Count - 1);
+                data.RemoveAt(data.Count - 1);
 
-            if(deleteIndex != data.Count)
-                Heappify(deleteIndex);
+                if (deleteIndex != data.Count)
+                    Heappify(deleteIndex);
+            }
         }
 
         public bool Contains(T element)
@@ -132,8 +142,8 @@ namespace AlgorithmsCourse1.DataStructures
             if (index1 == index2)
                 return;
 
-            dataDictionary.Remove(data[index1]);
-            dataDictionary.Remove(data[index2]);
+            dataDictionary.Remove(data[index1], index1);
+            dataDictionary.Remove(data[index2], index2);
 
             T temp = data[index1];
             data[index1] = data[index2];
