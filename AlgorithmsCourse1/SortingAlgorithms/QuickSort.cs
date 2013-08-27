@@ -13,7 +13,7 @@ namespace AlgorithmsCourse1.SortingAlgorithms
 
     class QuickSort
     {
-        public int[] Sort(int[] array, int startIndex, int endIndex, PivotSelectionMethod pivotSelection)
+        public static T[] Sort<T>(T[] array, int startIndex, int endIndex, PivotSelectionMethod pivotSelection) where T : IComparable<T>
         {
             if(startIndex > endIndex)
                 throw new ArgumentException("Start index can't be bigger than end index.");
@@ -22,14 +22,14 @@ namespace AlgorithmsCourse1.SortingAlgorithms
                 return array;
 
             int pivotElementIndex = GetPivotIndex(array, startIndex, endIndex, pivotSelection);
-            int pivotValue = array[pivotElementIndex];
+            T pivotValue = array[pivotElementIndex];
             Swap(array, startIndex, pivotElementIndex);
 
             int firstBiggerIndex = startIndex + 1; // index of the first element that is bigger than pivot element
             for (int j = startIndex + 1; j <= endIndex; j++)
             {
-                if (array[j] < pivotValue) // there might be a redundant swap if the first element we check is less than pivot,
-                {                          // but this won't hurt anybody
+                if (array[j].CompareTo(pivotValue) == -1) // there might be a redundant swap if the first element we check is less than pivot,
+                {                                         // but this won't hurt anybody
                     Swap(array, firstBiggerIndex, j);
                     firstBiggerIndex++;
                 }
@@ -44,7 +44,7 @@ namespace AlgorithmsCourse1.SortingAlgorithms
             return array;
         }
 
-        private int GetPivotIndex(int[] array, int startIndex, int endIndex, PivotSelectionMethod pivotSelection)
+        private static int GetPivotIndex<T>(T[] array, int startIndex, int endIndex, PivotSelectionMethod pivotSelection) where T : IComparable<T>
         {
             switch (pivotSelection)
             {
@@ -66,10 +66,10 @@ namespace AlgorithmsCourse1.SortingAlgorithms
                     if (arrayLength%2 == 0)
                         middleIndex--;
 
-                    Tuple<int, int>[] keyElements = new Tuple<int, int>[3];
-                    keyElements[0] = new Tuple<int, int>(startIndex, array[startIndex]);
-                    keyElements[1] = new Tuple<int, int>(middleIndex, array[middleIndex]);
-                    keyElements[2] = new Tuple<int, int>(endIndex, array[endIndex]);
+                    Tuple<int, T>[] keyElements = new Tuple<int, T>[3];
+                    keyElements[0] = new Tuple<int, T>(startIndex, array[startIndex]);
+                    keyElements[1] = new Tuple<int, T>(middleIndex, array[middleIndex]);
+                    keyElements[2] = new Tuple<int, T>(endIndex, array[endIndex]);
                     keyElements = keyElements.OrderBy(el => el.Item2).ToArray();
 
                     return keyElements[1].Item1;
@@ -84,9 +84,9 @@ namespace AlgorithmsCourse1.SortingAlgorithms
             }
         }
 
-        private void Swap(int[] array, int index1, int index2)
+        private static void Swap<T>(T[] array, int index1, int index2)
         {
-            int temp = array[index1];
+            T temp = array[index1];
             array[index1] = array[index2];
             array[index2] = temp;
         }

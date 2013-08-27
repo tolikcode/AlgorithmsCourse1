@@ -1,21 +1,22 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 namespace AlgorithmsCourse1.SortingAlgorithms
 {
     class MergeSort
     {
-        public int[] Sort(int[] initialArray, bool descending)
+        public static T[] Sort<T>(T[] initialArray, bool descending) where T : IComparable<T>
         {
             if (initialArray.Length < 2)
                 return initialArray;
 
-            int[] firstArray = initialArray.Take(initialArray.Length / 2).ToArray();
-            int[] secondArray = initialArray.Skip(initialArray.Length / 2).ToArray();
+            T[] firstArray = initialArray.Take(initialArray.Length / 2).ToArray();
+            T[] secondArray = initialArray.Skip(initialArray.Length / 2).ToArray();
 
-            int[] firstArraySorted = Sort(firstArray, descending);
-            int[] secondArraySorted = Sort(secondArray, descending);
+            T[] firstArraySorted = Sort(firstArray, descending);
+            T[] secondArraySorted = Sort(secondArray, descending);
 
-            int[] resultArray = new int[initialArray.Length];
+            T[] resultArray = new T[initialArray.Length];
 
             int i = 0;
             int j = 0;
@@ -35,8 +36,8 @@ namespace AlgorithmsCourse1.SortingAlgorithms
                     continue;
                 }
 
-                if ((firstArraySorted[i] > secondArraySorted[j] && !descending)
-                    || (firstArraySorted[i] < secondArraySorted[j] && descending))
+                if ((firstArraySorted[i].CompareTo(secondArraySorted[j]) == 1 && !descending)
+                    || (firstArraySorted[i].CompareTo(secondArraySorted[j]) == -1 && descending))
                 {
                     resultArray[k] = secondArraySorted[j];
                     j++;
