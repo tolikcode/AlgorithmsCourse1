@@ -55,7 +55,8 @@ namespace AlgorithmsCourse1
 
         static void Main(string[] args)
         {
-            ProgrammingQuestion5();
+            Console.WriteLine("AlgorithmsCourse1");
+            Console.WriteLine("This project contains implementation of different algorithms I studied during Algorithms: Design and Analysis, Part 1 course on Coursera.");
 
             Console.WriteLine("Done.");
             Console.ReadLine();
@@ -226,6 +227,23 @@ namespace AlgorithmsCourse1
                 Console.Write(verticesArray[targetVertex].ShortestPath + ",");
             }
             Console.WriteLine();
+        }
+
+        public static void ProgrammingQuestion6()
+        {
+            string[] taskLines = File.ReadAllLines(@"TasksData\algo1-programming_prob-2sum (Task 6).txt");
+            long[] integers = taskLines.Select(taskLine => long.Parse(taskLine)).ToArray();
+
+            TwoSum twoSum = new TwoSum();
+            int numberOfTwoSums = twoSum.Calculate(integers, -10000, 10000); // [-10000, 10000] range from the task
+            Console.WriteLine("Number of 2-Sums " + numberOfTwoSums);
+
+            int[] integersForMedian = File.ReadAllLines(@"TasksData\Median (Task 6).txt").Select(s => int.Parse(s)).ToArray();
+
+            SumOfMedians sumOfMedians = new SumOfMedians();
+            int mediansSum = sumOfMedians.Calculate(integersForMedian);
+            Console.WriteLine("Sum of medians = " + mediansSum);
+            Console.WriteLine("Sum of medians mod 10000 = " + (mediansSum - (mediansSum / 10000) * 10000));
         }
 
     }

@@ -25,6 +25,7 @@ namespace AlgorithmsCourse1.TasksImplementations
     class InversionsCount
     {
         /// <summary>
+        /// Counts the number of inversions (bigger numbers before smaller ones) in array
         /// This algorithm is based on a merge sort algorithm.
         /// </summary>
         /// <param name="initialArray"></param>
