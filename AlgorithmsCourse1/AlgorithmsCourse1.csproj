@@ -50,33 +50,33 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SortingAlgorithms\QuickSort.cs" />
-    <Compile Include="TasksImplementations\StrongComponents.cs" />
+    <Compile Include="TasksImplementations\StronglyConnectedComponents.cs" />
     <Compile Include="TasksImplementations\InversionsCount.cs" />
     <Compile Include="TasksImplementations\QuickSortComparisonsCount.cs" />
     <Compile Include="TasksImplementations\SumOfMedians.cs" />
     <Compile Include="TasksImplementations\TwoSum.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="TasksData\algo1-programming_prob-2sum %28Task 6%29.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <Content Include="TasksData\algo1-programming_prob-2sum.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="TasksData\dijkstraData %28Task5%29.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <Content Include="TasksData\dijkstraData.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="TasksData\IntegerArray %28Task1%29.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <Content Include="TasksData\IntegerArray.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="TasksData\kargerMinCut %28Task3%29.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <Content Include="TasksData\kargerMinCut.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="TasksData\Median %28Task 6%29.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <Content Include="TasksData\Median.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="TasksData\QuickSort %28Task2%29.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <Content Include="TasksData\QuickSort.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="TasksData\SCC %28Task4%29.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <Content Include="TasksData\SCC.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

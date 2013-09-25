@@ -19,12 +19,21 @@ namespace AlgorithmsCourse1.TasksImplementations
         public List<SccVertex> LeadVertices { get; set; }
     }
 
-    class StrongComponents
+    /// <summary>
+    /// Algorithm for finding strongly connected components in a directed graph.
+    /// </summary>
+    class StronglyConnectedComponents
     {
         private SccVertex currentLeaderVertex;
         private List<SccVertex> finishedOrderedGraph;
  
-        public SccVertex[] Compute(SccVertex[] graph)
+        /// <summary>
+        /// Computes all SCC and prints to screen n largest.
+        /// </summary>
+        /// <param name="graph">Graph vertices</param>
+        /// <param name="numberOfComponents">Nymber of largest SCC to find</param>
+        /// <returns>SCC leader nodes</returns>
+        public SccVertex[] ComputeLargestScc(SccVertex[] graph, int numberOfComponents)
         {
             currentLeaderVertex = null;
             finishedOrderedGraph = new List<SccVertex>();
@@ -57,8 +66,8 @@ namespace AlgorithmsCourse1.TasksImplementations
                                             .OrderByDescending(v => v.LeadVertices.Count)
                                             .ToArray();
 
-            Console.WriteLine("All SCCs were found. Five biggest SCC:");
-            for (int i = 0; i < 5; i++)
+            Console.WriteLine("All SCCs were found. {0} largest SCC:", numberOfComponents);
+            for (int i = 0; i < numberOfComponents; i++)
             {
                 Console.WriteLine(sccLeaderNodes[i].LeadVertices.Count);
             }

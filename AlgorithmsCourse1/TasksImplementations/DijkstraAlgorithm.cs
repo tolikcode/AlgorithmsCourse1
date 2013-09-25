@@ -23,7 +23,8 @@ namespace AlgorithmsCourse1.TasksImplementations
     }
 
     /// <summary>
-    /// Dijkstra algorithm for undirected graph.
+    /// Dijkstra algorithm for computing the shortest-path distances between start vertex and every other vertex of the undirected graph.
+    /// Heap-based implementation.
     /// </summary>
     class DijkstraAlgorithm
     {

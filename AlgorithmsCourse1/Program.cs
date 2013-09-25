@@ -56,16 +56,20 @@ namespace AlgorithmsCourse1
         static void Main(string[] args)
         {
             Console.WriteLine("AlgorithmsCourse1");
-            Console.WriteLine("This project contains implementation of different algorithms I studied during Algorithms: Design and Analysis, Part 1 course on Coursera.");
+            Console.WriteLine("This project contains implementation of different algorithms and data structures I studied during Algorithms: Design and Analysis, Part 1 course on Coursera.");
 
             Console.WriteLine("Done.");
             Console.ReadLine();
         }
 
-        private static void ProgrammingQuestion1()
+        /// <summary>
+        /// Computes the number of inversions in the file given, where the i-th row of the file indicates the i-th entry of an array
+        /// using MergeSort like algorithm.
+        /// </summary>
+        private static void CountInversions()
         {
             int[] initialArray = new int[100000];
-            StreamReader streamReader = new StreamReader(@"TasksData\IntegerArray (Task1).txt");
+            StreamReader streamReader = new StreamReader(@"TasksData\IntegerArray.txt");
 
             string line;
             int i = 0;
@@ -84,10 +88,14 @@ namespace AlgorithmsCourse1
             Console.WriteLine("Number of inversions: {0}", sortedArray.NumberOfInversions);
         }
 
-        private static void ProgrammingQuestion2()
+        /// <summary>
+        /// Computes the total number of comparisons used to sort the given input file by QuickSort
+        /// with different methods of pivot element selection.
+        /// </summary>
+        private static void CountComparisonsInQuickSort()
         {
             int[] initialArray = new int[10000];
-            StreamReader streamReader = new StreamReader(@"TasksData\QuickSort (Task2).txt");
+            StreamReader streamReader = new StreamReader(@"TasksData\QuickSort.txt");
 
             string line;
             int i = 0;
@@ -99,14 +107,25 @@ namespace AlgorithmsCourse1
 
             QuickSortComparisonsCount comparisonsCount = new QuickSortComparisonsCount();
 
-            int numberOfComparisons = comparisonsCount.CountNumberOfComparisons(initialArray, PivotSelectionMethod.MedianOfThree);
+            int firstElementComparisons = comparisonsCount.CountNumberOfComparisons((int[])initialArray.Clone(), PivotSelectionMethod.FirstElement);
+            int randomComparisons = comparisonsCount.CountNumberOfComparisons((int[])initialArray.Clone(), PivotSelectionMethod.Random);
+            int medianOfThreeComparisons = comparisonsCount.CountNumberOfComparisons((int[])initialArray.Clone(), PivotSelectionMethod.MedianOfThree);
 
-            Console.WriteLine("Number of comparisons " + numberOfComparisons);
+            Console.WriteLine("Number of comparisons (first element selected as pivot): " + firstElementComparisons);
+            Console.WriteLine("Number of comparisons (random elemente selected as pivot): " + randomComparisons);
+            Console.WriteLine("Number of comparisons (median of three selected as pivot): " + medianOfThreeComparisons);
         }
 
-        private static void ProgrammingQuestion3()
+        /// <summary>
+        /// Computes the min cut of a graph with with Kargers randomized contraction algorithm.
+        /// 
+        /// The file contains the adjacency list representation of a simple undirected graph. 
+        /// The first column in the file represents the vertex label, and the particular row (other entries except the first column) tells
+        /// all the vertices that the vertex is adjacent to.
+        /// </summary>
+        private static void FindGraphsMinCut()
         {
-            StreamReader streamReader = new StreamReader(@"TasksData\kargerMinCut (Task3).txt");
+            StreamReader streamReader = new StreamReader(@"TasksData\kargerMinCut.txt");
             List<Edge> graph = new List<Edge>();
 
             string line;
@@ -162,9 +181,16 @@ namespace AlgorithmsCourse1
             Console.WriteLine("Total time elapsed: " + stopwatch.Elapsed);
         }
 
-        private static void ProgrammingQuestion4()
+        /// <summary>
+        /// Computes all SCC and prints to screen n largest.
+        /// 
+        /// Input file contains the edges of a directed graph.
+        /// Every row indicates an edge, the vertex label in first column is the tail and the vertex label in second column is the head.
+        /// </summary>
+        private static void ComputeStronglyConnectedComponents()
         {
-            int numberOfVertices = 875714; // known from a file
+            int numberOfVertices = 875714; // from the file
+            int requiredNumberOfLargestComponents = 5; // from the task
 
             SccVertex[] graph = new SccVertex[numberOfVertices + 1]; // position 0 in the array will always be empty
             for (int i = 1; i <= numberOfVertices; i++)
@@ -172,7 +198,7 @@ namespace AlgorithmsCourse1
                 graph[i] = new SccVertex();
             }
 
-            StreamReader streamReader = new StreamReader(@"TasksData\SCC (Task4).txt");
+            StreamReader streamReader = new StreamReader(@"TasksData\SCC.txt");
             string line;
             while ((line = streamReader.ReadLine()) != null)
             {
@@ -183,17 +209,26 @@ namespace AlgorithmsCourse1
                 headVertex.InVertices.Add(taleVertex);
             }
             Console.WriteLine("Reading of a graph from a file is finished.");
+            
 
-            StrongComponents sccAlgorithm = new StrongComponents();
-            Thread thread = new Thread(() => sccAlgorithm.Compute(graph), 20 * 1024 * 1024); // using an increased stack because of deep recursion
-                                                                                             // another approach would be to implement DFS using a stack data structure
-                                                                                             // instead of a recursion
+            StronglyConnectedComponents sccAlgorithm = new StronglyConnectedComponents();
+            Thread thread = new Thread(
+                () => sccAlgorithm.ComputeLargestScc(graph, requiredNumberOfLargestComponents), 20 * 1024 * 1024); // using an increased stack because of deep recursion
+                                                                                                                   // another approach would be to implement DFS using a stack data structure
+                                                                                                                   // instead of a recursion
             thread.Start();
         }
 
-        private static void ProgrammingQuestion5()
+        /// <summary>
+        /// Computes shortest-path distances between start vertex and every other vertex of the undirected graph (using Dijkstra algorithm),
+        /// and prints out distances to target vertices.
+        /// 
+        /// The file contains an adjacency list representation of an undirected weighted graph. Each row consists of the node tuples
+        /// that are adjacent to that particular vertex along with the length of that edge.
+        /// </summary>
+        private static void RunDijkstraAlgorithm()
         {
-            string[] taskLines = File.ReadAllLines(@"TasksData\dijkstraData (Task5).txt");
+            string[] taskLines = File.ReadAllLines(@"TasksData\dijkstraData.txt");
             int numberOfVertices = taskLines.Count();
 
             DijkstraVertex[] verticesArray = new DijkstraVertex[numberOfVertices + 1]; // position 0 in the array will always be empty
@@ -229,16 +264,31 @@ namespace AlgorithmsCourse1
             Console.WriteLine();
         }
 
-        public static void ProgrammingQuestion6()
+        /// <summary>
+        /// A variant of the 2-SUM algorithm. 
+        /// Computes the number of target values t in the interval [-10000,10000] (inclusive) such that there are distinct numbers x,y in the input file that satisfy x+y=t.
+        /// 
+        /// Input file contains 1 million integers, both positive and negative (there might be some repetitions).
+        /// </summary>
+        private static void TwoSumAlgorithm()
         {
-            string[] taskLines = File.ReadAllLines(@"TasksData\algo1-programming_prob-2sum (Task 6).txt");
+            string[] taskLines = File.ReadAllLines(@"TasksData\algo1-programming_prob-2sum.txt");
             long[] integers = taskLines.Select(taskLine => long.Parse(taskLine)).ToArray();
 
             TwoSum twoSum = new TwoSum();
             int numberOfTwoSums = twoSum.Calculate(integers, -10000, 10000); // [-10000, 10000] range from the task
             Console.WriteLine("Number of 2-Sums " + numberOfTwoSums);
+        }
 
-            int[] integersForMedian = File.ReadAllLines(@"TasksData\Median (Task 6).txt").Select(s => int.Parse(s)).ToArray();
+        /// <summary>
+        /// Determines a mediane after every next integer in an array, and then sums all medianes.
+        /// Result is sum of these 10000 medians, modulo 10000 (i.e., only the last 4 digits).
+        /// 
+        ///  Input file contains a list of the integers from 1 to 10000 in unsorted order; you should treat this as a stream of numbers.
+        /// </summary>
+        private static void MedianMaintenance()
+        {
+            int[] integersForMedian = File.ReadAllLines(@"TasksData\Median.txt").Select(s => int.Parse(s)).ToArray();
 
             SumOfMedians sumOfMedians = new SumOfMedians();
             int mediansSum = sumOfMedians.Calculate(integersForMedian);

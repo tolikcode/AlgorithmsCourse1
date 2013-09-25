@@ -26,7 +26,9 @@ namespace AlgorithmsCourse1.TasksImplementations
         }
     }
 
-
+    /// <summary>
+    /// Kargers randomized contraction algorithm for the min cut problem.
+    /// </summary>
     class KargersContraction
     {
         public int FindMinCut(List<Edge> graph)
